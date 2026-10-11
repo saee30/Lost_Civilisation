@@ -1,5 +1,3 @@
-package models;
-
 class Node {
     Artifact data;
     Node next;
@@ -13,7 +11,7 @@ public class Inventory {
     Node head;
     int count;
 
-    public Inventory() {
+    Inventory() {
         head=null;
         count=0;
     }
@@ -30,7 +28,7 @@ public class Inventory {
         return false;
     }
 
-    public boolean addArtifact(Artifact a) {
+    boolean addArtifact(Artifact a) {
         if(a==null) return false;
 
         if(contain(a.getArtifactId())) {
@@ -47,12 +45,12 @@ public class Inventory {
     }
 
     boolean removeArtifact(Artifact a) {
-        if(head==null) {
+        if((head==null)||(a==null)) {
             System.out.println("Inventory is empty!!");
             return false;
         }
 
-        if(a.equals(head.data)) {
+        if (a.getArtifactId() == head.data.getArtifactId()) {
             head=head.next;
             count--;
             System.out.println("Artifact removed");
@@ -60,7 +58,7 @@ public class Inventory {
         }
 
         Node curr=head;
-        while((curr.next!=null) && (a.getArtifactId()!=curr.data.getArtifactId())) {
+        while((curr.next!=null) && (a.getArtifactId()!=curr.next.data.getArtifactId())) {
             curr=curr.next;
         }
 
@@ -68,6 +66,7 @@ public class Inventory {
             curr.next=curr.next.next;
             count--;
             System.out.println("Artifact removed");   
+            return true;
         }
 
         System.out.println("Artifact not found");
@@ -85,11 +84,11 @@ public class Inventory {
         return null;
     }
 
-    public int number() {
+    int number() {
         return count;
     }
 
-    public int totalValue() {
+    int totalValue() {
         int val=0;
         Node curr=head;
 
@@ -101,7 +100,7 @@ public class Inventory {
         return val;
     }
 
-    public void display() {
+    void display() {
         if(head==null) {
             System.out.println("Inventory is empty.\n0 Artifacts found");
         }
