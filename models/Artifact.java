@@ -1,3 +1,4 @@
+package models;
 public class Artifact {
     private int artifactId;
     private String name;
