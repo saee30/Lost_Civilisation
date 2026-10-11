@@ -1,21 +1,24 @@
 package models.queue;
 
+import graph.Location;
 import models.Artifact;
-import models.Location;
 import java.util.ArrayList;
 
 public class ExcavationProcessor {
     private ExcavationQueue queue;
     private ArrayList<Location> locations;
+    private ArrayList<Artifact> artifacts;   // master list of all artefacts
 
-    public ExcavationProcessor(ExcavationQueue queue, ArrayList<Location> locations) {
+    public ExcavationProcessor(ExcavationQueue queue, ArrayList<Location> locations,
+                               ArrayList<Artifact> artifacts) {
         this.queue = queue;
         this.locations = locations;
+        this.artifacts = artifacts;
     }
 
-    private Location findLocation(String id) {
+    private Location findLocation(int id) {
         for (int i = 0; i < locations.size(); i++) {
-            if (locations.get(i).getId().equals(id)) {
+            if (locations.get(i).getLocationID() == id) {
                 return locations.get(i);
             }
         }
@@ -34,8 +37,24 @@ public class ExcavationProcessor {
             System.out.println("Unknown location: " + request.getLocationId());
             return new ArrayList<>();
         }
+        if (!loc.isUnlocked()) {
+            System.out.println(loc.getName() + " is locked.");
+            return new ArrayList<>();
+        }
+        if (loc.isExcavated()) {
+            System.out.println(loc.getName() + " has already been excavated.");
+            return new ArrayList<>();
+        }
 
         System.out.println("Excavating " + loc.getName() + " (clue: " + request.getClue() + ")");
-        return loc.revealRemaining();
+        loc.setExcavated(true);
+
+        ArrayList<Artifact> found = new ArrayList<>();
+        for (int i = 0; i < artifacts.size(); i++) {
+            if (artifacts.get(i).getLocation().equals(loc.getName())) {
+                found.add(artifacts.get(i));
+            }
+        }
+        return found;
     }
 }
