@@ -12,7 +12,7 @@ public class ExcavationQueue {
         size = 0;
     }
 
-    public void enqueue(String locationId, String clue)
+    public void enqueue(int locationId, String clue)
     {
         ExcavationNode node = new ExcavationNode(locationId, clue);
         if(rear==null)
