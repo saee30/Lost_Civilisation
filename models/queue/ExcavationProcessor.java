@@ -1,5 +1,6 @@
 package models.queue;
 
+import bst.ArtifactBST;
 import graph.Location;
 import models.Artifact;
 import java.util.ArrayList;
@@ -8,12 +9,14 @@ public class ExcavationProcessor {
     private ExcavationQueue queue;
     private ArrayList<Location> locations;
     private ArrayList<Artifact> artifacts;   // master list of all artefacts
+    private ArtifactBST database;            // searchable artefact database
 
     public ExcavationProcessor(ExcavationQueue queue, ArrayList<Location> locations,
-                               ArrayList<Artifact> artifacts) {
+                               ArrayList<Artifact> artifacts, ArtifactBST database) {
         this.queue = queue;
         this.locations = locations;
         this.artifacts = artifacts;
+        this.database = database;
     }
 
     private Location findLocation(int id) {
@@ -54,6 +57,11 @@ public class ExcavationProcessor {
             if (artifacts.get(i).getLocation().equals(loc.getName())) {
                 found.add(artifacts.get(i));
             }
+        }
+
+        // add every discovery to the searchable database
+        for (int i = 0; i < found.size(); i++) {
+            database.insert(found.get(i));
         }
         return found;
     }
