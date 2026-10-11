@@ -1,5 +1,5 @@
 package bst;
-import model.Artifact;
+import models.Artifact;
 
 public class ArtifactBST {
     
