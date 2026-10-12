@@ -62,7 +62,7 @@ public class ArtifactBST {
         }
     }
 
-    public Artifact search(int artifactId) {
+    public boolean search(int artifactId) {
 
         ArtifactNode curr = root;
 
@@ -70,7 +70,7 @@ public class ArtifactBST {
 
             if(artifactId == curr.data.getArtifactId()) {
 
-                return curr.data;
+                return true;
             }
 
             else if (artifactId < curr.data.getArtifactId()) {
@@ -84,7 +84,7 @@ public class ArtifactBST {
             }
         }
 
-        return null; //returning null if the artifact is not found
+        return false; //returning null if the artifact is not found
     }
 
     public void inorder() {

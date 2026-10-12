@@ -1,3 +1,5 @@
+package models;
+import models.Artifact;
 import graph.CivilisationMap;
 import graph.Location;
 
@@ -9,59 +11,32 @@ public class Initialisation {
     public static final int MAX_ATTEMPTS = 3;
     public static final int NUMBER_OF_LOCATIONS = 8;
 
-    // ================= ARTEFACT DATA =================
-
-    public static class ArtifactData {
-
-        public int id;
-        public String name;
-        public String type;
-        public int age;
-        public String rarity;
-        public double value;
-        public String location;
-        public String description;
-
-        public ArtifactData(int id, String name, String type,
-                            int age, String rarity, double value,
-                            String location, String description) {
-            this.id = id;
-            this.name = name;
-            this.type = type;
-            this.age = age;
-            this.rarity = rarity;
-            this.value = value;
-            this.location = location;
-            this.description = description;
-        }
-    }
-
-    public static final ArtifactData[] ARTIFACTS = {
-        new ArtifactData(1, "Golden Crown", "Royal Relic",
+    public static final Artifact[] ARTIFACTS = {
+        new Artifact(1, "Golden Crown", "Royal Relic",
             1200, "Legendary", 1000, "King's Fort",
             "A crown worn by the rulers of the forgotten kingdom."),
 
-        new ArtifactData(2, "Sun Stone", "Religious Relic",
+        new Artifact(2, "Sun Stone", "Religious Relic",
             1100, "Rare", 800, "Sun Temple",
             "A stone used in ancient solar ceremonies."),
 
-        new ArtifactData(3, "Secret Scroll", "Manuscript",
+        new Artifact(3, "Secret Scroll", "Manuscript",
             1000, "Rare", 700, "Old Archives",
             "A scroll containing records of the kingdom's past."),
 
-        new ArtifactData(4, "Blue Gem", "Gemstone",
+        new Artifact(4, "Blue Gem", "Gemstone",
             900, "Very Rare", 900, "Crystal Cave",
             "A blue gemstone concealed in an underground chamber."),
 
-        new ArtifactData(5, "Silver Cup", "Ceremonial Object",
+        new Artifact(5, "Silver Cup", "Ceremonial Object",
             950, "Uncommon", 500, "Old Stepwell",
             "A silver cup used during royal ceremonies."),
 
-        new ArtifactData(6, "Old Compass", "Navigation Tool",
+        new Artifact(6, "Old Compass", "Navigation Tool",
             850, "Rare", 650, "Lost Harbour",
             "A compass once used by the kingdom's sailors."),
 
-        new ArtifactData(7, "Star Lens", "Astronomical Instrument",
+        new Artifact(7, "Star Lens", "Astronomical Instrument",
             800, "Very Rare", 850, "Star Tower",
             "A lens used by ancient astronomers.")
     };
@@ -144,14 +119,14 @@ public class Initialisation {
             }),
 
         new PuzzleData(5,
-            "A silver cup was hidden during an invasion.",
-            "The upper chamber flooded. The well chamber "
-            + "was sealed. Where could the cup have been hidden?",
-            "lower",
-            new String[]{"lower", "lower chamber"},
+            "An inscription is carved beside the Old Stepwell.",
+            "The deeper you go, the older the steps become. "
+            + "What are you descending through?",
+            "history",
+            new String[]{"history", "the past"},
             new String[]{
-                "Eliminate the chambers that could not be used.",
-                "Only one chamber remains."
+                "Think beyond the physical steps.",
+                "You are moving backwards through time."
             }),
 
         new PuzzleData(6,
@@ -236,6 +211,7 @@ public class Initialisation {
         }
 
         // Connections between locations
+        map.addEdge(0, 1);
         map.addEdge(1, 2);
         map.addEdge(1, 7);
         map.addEdge(2, 3);
@@ -251,9 +227,9 @@ public class Initialisation {
 
     // ================= RETRIEVE CONFIGURATION =================
 
-    public static ArtifactData getArtifact(int artifactId) {
-        for (ArtifactData artifact : ARTIFACTS) {
-            if (artifact.id == artifactId) {
+    public static Artifact getArtifact(int id) {
+        for (Artifact artifact : ARTIFACTS) {
+            if (artifact.artifactId == id) {
                 return artifact;
             }
         }

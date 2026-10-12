@@ -41,7 +41,6 @@ public class Inventory {
         Node temp=new Node(a);
         temp.next=head;
         head=temp;
-        System.out.println("Artifact added");
         count++;
         return true;
     }
@@ -111,7 +110,7 @@ public class Inventory {
             Node curr=head;
             int i=1;
             while(curr!=null) {
-                System.out.println("Artifact "+i++ + "\n"+curr.data.getName()+"\nRarity: "+curr.data.getRarity()+"\nValue: "+curr.data.getValue());
+                System.out.println("Artifact "+i++ + "\n"+curr.data.getName()+"\nRarity: "+curr.data.getRarity()+"\nValue: "+curr.data.getValue()+"\n");
                 curr=curr.next;
             }
             System.out.println("Total artifacts: "+count);

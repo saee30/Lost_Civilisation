@@ -1,14 +1,14 @@
 package models;
 
 public class Artifact {
-    private int artifactId;
-    private String name;
-    private String type;
-    private int age;
-    private String rarity;    // COMMON, UNCOMMON, RARE, LEGENDARY
-    private int value;
-    private String location;
-    private String description;
+    public int artifactId;
+    public String name;
+    public String type;
+    public int age;
+    public String rarity;    // COMMON, UNCOMMON, RARE, LEGENDARY
+    public int value;
+    public String location;
+    public String description;
 
     public Artifact(int artifactId, String name, String type, int age, String rarity, int value, String location, String description) {
         this.artifactId = artifactId;

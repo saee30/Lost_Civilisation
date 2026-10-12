@@ -4,10 +4,23 @@ public class ExplorationStack // Stack location operations
 {
 
     private StackNode top; // Top node of the stack
+    private StackNode histtop;
 
     // Check whether the stack is empty
     public boolean isEmpty() {
         return top == null;
+    }
+
+    //Check if a location already exists in the stack
+    private boolean isInHistory(String location) {
+        StackNode current = histtop;
+        while (current != null) {
+            if (current.location.equalsIgnoreCase(location)) {
+                return true; // Already visited earlier
+            }
+            current = current.next;
+        }
+        return false;
     }
 
     // Add a location to the stack
@@ -16,7 +29,11 @@ public class ExplorationStack // Stack location operations
 
         newNode.next = top;
         top = newNode;
-
+        if(!isInHistory(location)) {
+            StackNode hisNode = new StackNode(location);
+            hisNode.next = histtop;
+            histtop = hisNode;
+        }
         System.out.println(location + " added to exploration history.");
     }
 
@@ -51,9 +68,16 @@ public class ExplorationStack // Stack location operations
 
         StackNode current = top;
 
-        System.out.println("Exploration History (latest first):");
+        System.out.println("Current exploration path(latest first):");
 
         while (current != null) {
+            System.out.println(current.location);
+            current = current.next;
+        }
+
+        System.out.println("\nAll bypassed locations: ");
+        current=histtop;
+        while(current!=null) {
             System.out.println(current.location);
             current = current.next;
         }

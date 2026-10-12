@@ -1,7 +1,17 @@
 package graph;
 
-public class CivilisationMap {
+import java.util.*;
 
+public class CivilisationMap {
+    private static class GraphNode {
+        Location location;
+        GraphNode next;
+
+        GraphNode(Location location) {
+            this.location = location;
+            this.next = null;
+        }
+    }
     private static final int max_locs = 10;
     
     private Location[] locations = new Location[max_locs];
@@ -66,5 +76,39 @@ public class CivilisationMap {
         adjacencyList[id2 - 1] = newNode2;
 
         return true;
+    }
+
+    public List<Integer> getNeighbors(int locationId) {
+        List<Integer> neighbors = new ArrayList<>();
+        if (locationId < 1 || locationId > max_locs) {
+            return neighbors;
+        }
+
+        GraphNode current = adjacencyList[locationId - 1];
+        while (current != null) {
+            neighbors.add(current.location.getLocationID());
+            current = current.next;
+        }
+        return neighbors;
+    }
+
+    public void displayMap() {
+        for (int i = 0; i < max_locs; i++) {
+            if (locations[i] != null) {
+                System.out.print(locations[i].getName() + " connects to: ");
+
+                GraphNode current = adjacencyList[i];
+                if (current == null) {
+                    System.out.println("No pathways");
+                } else {
+                    List<String> neighbors = new ArrayList<>();
+                    while (current != null) {
+                        neighbors.add(current.location.getName());
+                        current = current.next;
+                    }
+                    System.out.println(String.join(", ", neighbors));
+                }
+            }
+        }
     }
 }
