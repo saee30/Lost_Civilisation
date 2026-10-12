@@ -1,3 +1,4 @@
+package stack;
 
 class StackNode // Represents a particular location in the game 
 {

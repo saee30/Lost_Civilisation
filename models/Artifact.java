@@ -1,4 +1,5 @@
 package models;
+
 public class Artifact {
     private int artifactId;
     private String name;
@@ -9,8 +10,7 @@ public class Artifact {
     private String location;
     private String description;
 
-    public Artifact(int artifactId, String name, String type, int age, 
-                    String rarity, int value, String location, String description) {
+    public Artifact(int artifactId, String name, String type, int age, String rarity, int value, String location, String description) {
         this.artifactId = artifactId;
         this.name = name;
         this.type = type;

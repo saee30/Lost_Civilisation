@@ -1,3 +1,5 @@
+package models;
+
 class Node {
     Artifact data;
     Node next;
@@ -11,13 +13,13 @@ public class Inventory {
     Node head;
     int count;
 
-    Inventory() {
+    public Inventory() {
         head=null;
         count=0;
     }
 
     //Check if artifact is already present
-    boolean contain(int artifactId) {
+    public boolean contain(int artifactId) {
         Node curr=head;
         while(curr!=null) {
             if (curr.data.getArtifactId()==artifactId) {
@@ -28,7 +30,7 @@ public class Inventory {
         return false;
     }
 
-    boolean addArtifact(Artifact a) {
+    public boolean addArtifact(Artifact a) {
         if(a==null) return false;
 
         if(contain(a.getArtifactId())) {
@@ -44,7 +46,7 @@ public class Inventory {
         return true;
     }
 
-    boolean removeArtifact(Artifact a) {
+    public boolean removeArtifact(Artifact a) {
         if((head==null)||(a==null)) {
             System.out.println("Inventory is empty!!");
             return false;
@@ -73,7 +75,7 @@ public class Inventory {
         return false;
     }
 
-    Artifact searchArtifact(int id) {
+    public Artifact searchArtifact(int id) {
         Node curr=head;
         while (curr!=null) {
             if (curr.data.getArtifactId()==id) {
@@ -84,11 +86,11 @@ public class Inventory {
         return null;
     }
 
-    int number() {
+    public int number() {
         return count;
     }
 
-    int totalValue() {
+    public int totalValue() {
         int val=0;
         Node curr=head;
 
@@ -100,7 +102,7 @@ public class Inventory {
         return val;
     }
 
-    void display() {
+    public void display() {
         if(head==null) {
             System.out.println("Inventory is empty.\n0 Artifacts found");
         }
