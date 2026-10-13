@@ -1,5 +1,4 @@
 package models;
-import models.Artifact;
 import graph.CivilisationMap;
 import graph.Location;
 
@@ -85,48 +84,36 @@ public class Initialisation {
                 "The differences are 4, 6, 8, 10. Continue the pattern."
             }),
 
-        new PuzzleData(3,
-            "Three records survived the destruction of the archives. One was forged. The royal archivist left a note explaining the kingdom's record-keeping rules.",
-            "\nThe evidence:\n"
-            + "A: The harbour was established in Year 120.\n"
-            + "B: The first royal treaty was signed in Year 145.\n"
-            + "C: The observatory was completed in Year 130.\n"
-            + "\nThe archivist's note: The observatory was completed after the harbour was established. The treaty was signed after the observatory was completed.\n",
-            "C",
-            new String[]{"c"},
+           new PuzzleData(3,
+            "A sealed royal dispatch lies inside the throne room.",
+            "I hold the stories of the past, but I never speak. "
+            + "You turn my pages to uncover secrets. What am I?",
+            "book",
+            new String[]{"book", "a book"},
             new String[]{
-                "Put the three events in chronological order using the archivist's note.",
-                "The harbour must come before the observatory, and the observatory must come before the treaty. Compare this order with the dates in the records."
+                "You can find me in a library.",
+                "I contain pages filled with words."
             }),
 
         new PuzzleData(4,
-            "You discover an abandoned expedition chamber. "
-            + "Three records describe the disappearance of the Blue Gem.",
-            "Keeper: The eastern entrance was sealed before "
-            + "the expedition began.\n"
-            + "Captain: The Blue Gem was present when the "
-            + "expedition began.\n"
-            + "Surveyor: The gem was missing when I arrived, "
-            + "and the captain had already left.\n"
-            + "The inscription states that the gem could only "
-            + "be removed after the eastern entrance was sealed.\n"
-            + "Whose account should be investigated first?",
-            "captain",
-            new String[]{"captain", "the captain", "captain's account"},
+            "A voice seems to answer you from deep inside the cave.",
+            "I repeat what you say, but I have no mouth. What am I?",
+            "echo",
+            new String[]{"echo", "an echo"},
             new String[]{
-                "Reconstruct the order in which the events occurred.",
-                "Compare the Captain's timeline with the Surveyor's report."
+                "You may hear me in mountains or caves.",
+                "I am your voice coming back to you."
             }),
 
         new PuzzleData(5,
-            "An inscription is carved beside the Old Stepwell.",
-            "The deeper you go, the older the steps become. "
-            + "What are you descending through?",
-            "history",
-            new String[]{"history", "the past"},
+            "An old watchman left a clue at the stepwell. It said: \n",
+            "I was standing at the top of the stepwell, facing towards the rising sun. I turned right twice, in order to check for a new visitor."
+            + "What direct am I facing now?",
+            "west",
+            new String[]{"west", "the west"},
             new String[]{
-                "Think beyond the physical steps.",
-                "You are moving backwards through time."
+                "Identify which cardinal direction the rising sun represents, then trace the watchman's turns.",
+                "Facing East and turning right once points you South. A second right turn rotates you 180 degrees from where you started."
             }),
 
         new PuzzleData(6,

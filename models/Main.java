@@ -1,7 +1,6 @@
 package models;
 import bst.*;
-import graph.CivilisationMap;
-import models.Initialisation.PuzzleData;
+import graph.*;
 import queue.*;
 import stack.*;
 import java.util.*;
@@ -10,11 +9,38 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
 
-        //Object creation
+        // Object creation
         Inventory playerinv = new Inventory();
         CivilisationMap map = Initialisation.createMap();
-        ExplorationStack es=new ExplorationStack();
-        ArtifactBST archive=new ArtifactBST();
+        ExplorationStack es = new ExplorationStack();
+        ArtifactBST archive = new ArtifactBST();
+        ExcavationQueue exqueue = new ExcavationQueue();
+
+        // Lists required by the ExcavationProcessor
+        ArrayList<Location> locations = new ArrayList<>();
+        ArrayList<Artifact> artifacts = new ArrayList<>();
+
+        // Populate locations
+        for (int i = 1; i <= Initialisation.NUMBER_OF_LOCATIONS; i++) {
+            locations.add(new Location(
+                i,
+                Initialisation.getLocationName(i),
+                ""
+            ));
+        }
+
+        // Populate the seven relics
+        for (int i = 1; i <= 7; i++) {
+            Artifact a = Initialisation.getArtifact(i);
+            if (a != null) {
+                artifacts.add(a);
+            }
+        }
+
+        // Create the processor AFTER populating both lists
+        ExcavationProcessor processor = new ExcavationProcessor(
+            exqueue, locations, artifacts, archive, playerinv
+        );
 
         int tokens=Initialisation.STARTING_TOKENS;
 
@@ -44,7 +70,9 @@ public class Main {
             System.out.println("4. Go back to previous location");
             System.out.println("5. View all bypassed locations");
             System.out.println("6. View the archive");
-            System.out.println("7. To abandon your quest");
+            System.out.println("7. View pending excavation requests");
+            System.out.println("8. Process next excavation request");
+            System.out.println("9. To abandon your quest");
             System.out.println("Enter choice (1-7)");
             int choice=0;
             while(true) {
@@ -151,9 +179,10 @@ public class Main {
                     
                     int hintIndex=0;
                     boolean solved=false;
+                    boolean exited=false;
                     int attempts=0;
 
-                    while((!solved)&&(attempts<Initialisation.MAX_ATTEMPTS)) {
+                    while((!solved)&&(!exited)&&(attempts<Initialisation.MAX_ATTEMPTS)) {
                         System.out.println("1. Enter answer\n2. Get a hint for 1 token\n3. Exit");
                         int ch=0;
                         while(true) {
@@ -180,13 +209,14 @@ public class Main {
                                     }
                                 }
 
-                                if(match) {
-                                    System.out.println("Congrats!! Artifact collected!");
-                                    playerinv.addArtifact(relic);
-                                    archive.insert(relic);
-                                    collected[currLoc]=true;
-                                    counter++;
-                                    solved=true;
+                                if (match) {
+                                    System.out.println("Correct answer! Excavation request added to queue.");
+                                    // Add the request to the queue
+                                    exqueue.enqueue(currLoc, Initialisation.getLocationName(currLoc), puzzle.clue);
+                                    System.out.println("Queue size: " + exqueue.size());
+                                    // Do NOT process it here.
+                                    // Option 8 will process the request later.
+                                    solved = true;
                                 }
                                 else {
                                     attempts++;
@@ -213,6 +243,7 @@ public class Main {
 
                             case 3: {
                                 System.out.println("Walking away");
+                                exited=true;
                             }
                             break;
 
@@ -223,7 +254,7 @@ public class Main {
                         }
                     }
 
-                    if (!solved && attempts >= Initialisation.MAX_ATTEMPTS) {
+                    if ((!solved) && (!exited) && (attempts >= Initialisation.MAX_ATTEMPTS)) {
                         System.out.println("Maximum attempts reached! You must leave and return later.");
                     }
                 }
@@ -326,6 +357,30 @@ public class Main {
                 break;
 
                 case 7: {
+                    System.out.println("Queue size: " + exqueue.size());
+                    exqueue.displayQueue();
+                }
+                break;
+                
+                case 8: {
+                    if (exqueue.isEmpty()) {
+                        System.out.println("No pending excavation requests.");
+                        break;
+                    }
+                    // Find the next location before processing its request so Main can update its own game state afterwards.
+                    int nextLocationId = -1;
+                    // The queue does not currently expose its front node
+                    nextLocationId = exqueue.peekLocationId();
+                    ArrayList<Artifact> found = processor.processNext();
+                    if (!found.isEmpty()) {
+                        collected[nextLocationId] = true;
+                        counter += found.size();
+                        System.out.println("Excavation successful! Relics recovered: " + found.size());
+                    }
+                    break;
+                }
+                
+                case 9: {
                     game=false;
                     System.out.println("Quest abandoned");
                 }
