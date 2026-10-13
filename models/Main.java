@@ -69,7 +69,7 @@ public class Main {
             System.out.println("3. Display the entire map");
             System.out.println("4. Go back to previous location");
             System.out.println("5. View all bypassed locations");
-            System.out.println("6. View the archive");
+            System.out.println("6. View your inventory");
             System.out.println("7. View pending excavation requests");
             System.out.println("8. Process next excavation request");
             System.out.println("9. To abandon your quest");
