@@ -15,7 +15,6 @@ public class CivilisationMap {
     private static final int max_locs = 10;
     
     private Location[] locations = new Location[max_locs];
-    private int locationCount = 0;
 
     private GraphNode[] adjacencyList = new GraphNode[max_locs]; //10 vertices (connected to multiple other locations), 10 spots in the adjacency list
 
@@ -43,7 +42,6 @@ public class CivilisationMap {
 
         //adding the location
         locations[index] = loc;
-        locationCount++;
 
         return true;
     }
